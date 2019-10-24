@@ -71,7 +71,7 @@ function createChecker(
   const apiIncrementalCheckerParams: ApiIncrementalCheckerParams = {
     typescript,
     context: process.env.CONTEXT!,
-    programConfigFile: process.env.TSCONFIG!,
+    rootFiles: JSON.parse(process.env.ROOT_FILES!),
     compilerOptions: JSON.parse(process.env.COMPILER_OPTIONS!),
     createNormalizedMessageFromDiagnostic,
     linterConfigFile:
@@ -92,6 +92,7 @@ function createChecker(
     {},
     apiIncrementalCheckerParams,
     {
+      programConfigFile: process.env.TSCONFIG!,
       watchPaths: process.env.WATCH === '' ? [] : process.env.WATCH!.split('|'),
       workNumber: parseInt(process.env.WORK_NUMBER!, 10) || 0,
       workDivision: parseInt(process.env.WORK_DIVISION!, 10) || 1,

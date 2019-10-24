@@ -26,7 +26,7 @@ export interface IncrementalCheckerInterface {
 export interface ApiIncrementalCheckerParams {
   typescript: typeof ts;
   context: string;
-  programConfigFile: string;
+  rootFiles: string[];
   compilerOptions: ts.CompilerOptions;
   createNormalizedMessageFromDiagnostic: (
     diagnostic: ts.Diagnostic
@@ -43,6 +43,7 @@ export interface ApiIncrementalCheckerParams {
 }
 
 export interface IncrementalCheckerParams extends ApiIncrementalCheckerParams {
+  programConfigFile: string;
   watchPaths: string[];
   workNumber: number;
   workDivision: number;

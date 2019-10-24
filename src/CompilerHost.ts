@@ -16,7 +16,7 @@ interface FileWatchDelaySlot {
 
 export class CompilerHost
   implements
-    ts.WatchCompilerHostOfConfigFile<
+    ts.WatchCompilerHostOfFilesAndCompilerOptions<
       ts.EmitAndSemanticDiagnosticsBuilderProgram
     > {
   private program?: ts.WatchOfConfigFile<
@@ -31,8 +31,8 @@ export class CompilerHost
     return this.knownFiles;
   }
 
-  public configFileName: string;
-  public optionsToExtend: ts.CompilerOptions;
+  public rootFiles: string[];
+  public options: ts.CompilerOptions;
 
   // intercept all watch events and collect them until we get notification to start compilation
   private directoryWatchers = new LinkedList<DirectoryWatchDelaySlot>();
@@ -45,7 +45,7 @@ export class CompilerHost
     /* do nothing */
   };
 
-  private readonly tsHost: ts.WatchCompilerHostOfConfigFile<
+  private readonly tsHost: ts.WatchCompilerHostOfFilesAndCompilerOptions<
     ts.EmitAndSemanticDiagnosticsBuilderProgram
   >;
   protected lastProcessing?: Promise<ts.Diagnostic[]>;
@@ -70,14 +70,14 @@ export class CompilerHost
 
   constructor(
     private typescript: typeof ts,
-    programConfigFile: string,
+    rootFiles: string[],
     compilerOptions: ts.CompilerOptions,
     checkSyntacticErrors: boolean,
     userResolveModuleName?: ResolveModuleName,
     userResolveTypeReferenceDirective?: ResolveTypeReferenceDirective
   ) {
     this.tsHost = typescript.createWatchCompilerHost(
-      programConfigFile,
+      rootFiles,
       compilerOptions,
       typescript.sys,
       typescript.createEmitAndSemanticDiagnosticsBuilderProgram,
@@ -97,8 +97,8 @@ export class CompilerHost
       }
     );
 
-    this.configFileName = this.tsHost.configFileName;
-    this.optionsToExtend = this.tsHost.optionsToExtend || {};
+    this.rootFiles = rootFiles;
+    this.options = compilerOptions;
 
     if (userResolveModuleName) {
       this.resolveModuleNames = (
@@ -110,7 +110,7 @@ export class CompilerHost
             this.typescript,
             moduleName,
             containingFile,
-            this.optionsToExtend,
+            this.options,
             this
           ).resolvedModule;
         });
@@ -127,7 +127,7 @@ export class CompilerHost
             this.typescript,
             typeDirectiveName,
             containingFile,
-            this.optionsToExtend,
+            this.options,
             this
           ).resolvedTypeReferenceDirective;
         });

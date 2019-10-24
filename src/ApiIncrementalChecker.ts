@@ -52,7 +52,7 @@ export class ApiIncrementalChecker implements IncrementalCheckerInterface {
   constructor({
     typescript,
     context,
-    programConfigFile,
+    rootFiles,
     compilerOptions,
     createNormalizedMessageFromDiagnostic,
     linterConfigFile,
@@ -76,7 +76,7 @@ export class ApiIncrementalChecker implements IncrementalCheckerInterface {
 
     this.tsIncrementalCompiler = new CompilerHost(
       typescript,
-      programConfigFile,
+      rootFiles,
       compilerOptions,
       checkSyntacticErrors,
       resolveModuleName,

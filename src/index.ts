@@ -39,6 +39,7 @@ namespace ForkTsCheckerWebpackPlugin {
   }
 
   export interface Options {
+    rootFiles: string[];
     typescript: string;
     tsconfig: string;
     compilerOptions: object;
@@ -644,6 +645,7 @@ class ForkTsCheckerWebpackPlugin {
       ...process.env,
       TYPESCRIPT_PATH: this.typescriptPath,
       TSCONFIG: this.tsconfigPath,
+      ROOT_FILES: JSON.stringify(this.options.rootFiles || []),
       COMPILER_OPTIONS: JSON.stringify(this.compilerOptions),
       TSLINT: this.tslintPath || (this.tslint ? 'true' : ''),
       CONTEXT: this.compiler.options.context,
