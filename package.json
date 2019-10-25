@@ -46,7 +46,8 @@
     "test:watch": "jest unit --watch",
     "watch": "tsc --version && tsc --project \"./src\" --watch",
     "precommit": "lint-staged && yarn build",
-    "commit": "./node_modules/.bin/git-cz"
+    "commit": "./node_modules/.bin/git-cz",
+    "prepare": "yarn build"
   },
   "husky": {
     "hooks": {
