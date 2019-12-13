@@ -204,11 +204,6 @@ Commit message have to follow [conventional-commit](https://www.conventionalcomm
 This repository use [Commitizen](https://github.com/commitizen/cz-cli) to help you create [valid commit messages](#commit-message-guidelines).
 After staging your changes with `git add`, run `yarn commit` to start the interactive commit message CLI.
 
-## Releasing a new version
-
-This plugin uses [`📦🚀 semantic-release`](https://github.com/semantic-release/semantic-release) to automatically generate new versions and
-publish them on the [npm](https://www.npmjs.com/package/fork-ts-checker-webpack-plugin) and [GitHub](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin/releases).
-
 ### Releasing a beta version
 
 Experimental features and improvements should be merged into the `beta` branch.
